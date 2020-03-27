@@ -2,8 +2,8 @@ import os
 
 import configurations
 from celery import Celery
-from celery.schedules import crontab
 from decouple import config
+
 
 # from layouts.tasks import create_instances_according_date
 # set the default Django settings_old module for the 'celery' program.
@@ -22,6 +22,15 @@ app = Celery('config')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
 app.autodiscover_tasks()
+
+# ToDo change 10 min
+app.conf.beat_schedule = {
+    'add-every-60-seconds': {
+        'task': 'apps.users.task.check_send_mail',
+        'schedule': 1.0,
+    },
+}
+
 
 @app.task(bind=True)
 def debug_task(self):

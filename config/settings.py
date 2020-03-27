@@ -24,6 +24,7 @@ class Base(Configuration):
 
     # SECURITY WARNING: keep the secret key used in production secret!
     SECRET_KEY = config('SECRET_KEY', cast=str)
+    BASE_URL = config('BASE_URL', cast=str)
 
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
@@ -33,10 +34,8 @@ class Base(Configuration):
     ]
 
     FRONTEND_HOST = config('FRONTEND_HOST', 'http://127.0.0.1:3000/', cast=str)
-    FRONTEND_COORDINATE_HOST = FRONTEND_HOST + 'coordinate'
 
     # Application definition
-
     INSTALLED_APPS = [
         'django.contrib.admin',
         'django.contrib.auth',
@@ -174,15 +173,15 @@ class Base(Configuration):
     CELERY_ACCEPT_CONTENT = ['application/json']
 
     # Cache backend settings
-    CACHES = {
-        'default': {
-            'BACKEND': 'django_redis.cache.RedisCache',
-            'LOCATION': 'redis://127.0.0.1:6379/1',
-            'OPTIONS': {
-                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            }
-        }
-    }
+    # CACHES = {
+    #     'default': {
+    #         'BACKEND': 'django_redis.cache.RedisCache',
+    #         'LOCATION': 'redis://127.0.0.1:6379/1',
+    #         'OPTIONS': {
+    #             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+    #         }
+    #     }
+    # }
 
     AUTH_USER_MODEL = 'users.Users'
 

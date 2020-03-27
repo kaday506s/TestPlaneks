@@ -13,7 +13,7 @@ from django.core.wsgi import get_wsgi_application
 
 # TODO add .env settings
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
-os.environ.setdefault('DJANGO_CONFIGURATION', 'DevDocker')
+os.environ.setdefault('DJANGO_CONFIGURATION', 'DevLocal')
 importer.install()
 
 application = get_wsgi_application()

@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
-from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.db import models
 
 from hashlib import md5
 from time import time
@@ -23,7 +23,7 @@ class Group(models.Model):
     )
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.permission}"
 
 
 class Users(AbstractUser):
@@ -80,6 +80,9 @@ class UserVerifications(models.Model):
         verbose_name=_("token")
     )
     is_activate = models.BooleanField(
+        default=False
+    )
+    is_send_mail = models.BooleanField(
         default=False
     )
 

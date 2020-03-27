@@ -14,14 +14,15 @@ from rest_framework_simplejwt.views import (
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from apps.users.views import UsersViewSet, LoginViewSet
-from apps.posts.views import PostsViewSet, CategoryViewSet, PostsCommentViewSet
+from apps.users.views import UsersViewSet, LoginViewSet, UsersUpdateViewSets
+from apps.posts.views import PostsViewSet, CategoryViewSet
 
 router = DefaultRouter(trailing_slash=False)
 router.register('users', UsersViewSet, basename='users')
+router.register('user', UsersUpdateViewSets, basename='user')
+
 router.register('posts', PostsViewSet, basename='posts')
 router.register('category', CategoryViewSet, basename='category')
-router.register('comments', PostsCommentViewSet, basename='comments')
 
 
 schema_view = get_schema_view(
@@ -39,9 +40,12 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path('login/', LoginViewSet.as_view(), name='token_obtain_pair'),
+
     path('token_refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token_verify/', TokenVerifyView.as_view(), name='token_verify'),
+
     path('api/v1/', include(router.urls)),
 
     url(r'^swagger(?P<format>\.json|\.yaml)$',

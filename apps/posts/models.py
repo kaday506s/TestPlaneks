@@ -9,6 +9,7 @@ class Category(models.Model):
     category_name = models.CharField(
         max_length=255,
         unique=True,
+        db_index=True,
         verbose_name=_("category_name"),
     )
 

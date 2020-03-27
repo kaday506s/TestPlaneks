@@ -1,5 +1,5 @@
 from django.test import TestCase
-from apps.users.models import Users, Group
+from apps.users.models import Users, Group, UserVerifications
 
 
 class GroupTest(TestCase):

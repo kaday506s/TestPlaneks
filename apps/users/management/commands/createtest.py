@@ -4,32 +4,52 @@ from apps.users.models import Group, Users
 
 class Command(BaseCommand):
 
+    def _create_group(self, name, permission):
+        group, created = Group.objects.get_or_create(
+            name=name, permission=permission
+        )
+        if created:
+            self.stdout.write(
+                self.style.SUCCESS(
+                  f"Create Group : {group.name}- "
+                  f"permission lvl {group.permission}"
+                )
+            )
+
+        return group
+
+    def _create_user(self, name, password, group):
+        try:
+            user = Users.objects.create_user(
+                username=name,
+                password=password
+            )
+        except Exception as err:
+            self.stdout.write(
+                self.style.ERROR(
+                    err
+                )
+            )
+            return None
+
+        user.grop = group
+        user.save()
+
+        self.stdout.write(
+            self.style.SUCCESS(
+                f"Create User : {user.username}"
+            )
+        )
+
     def handle(self, *args, **kwargs):
-        group_low, created = Group.objects.get_or_create(
+        group = self._create_group(
             name="low", permission=1
         )
-        if created:
-          print(f"Create Group : {group_low.name}")
 
-        group_a, created = Group.objects.get_or_create(
-            name="admin", permission=4
-        )
-        if created:
-            print(f"Create Group : {group_low.name}")
+        self._create_user("admin", "1234", group)
 
-        user, created = Users.objects.get_or_create(
-            username="test",
-            password="1234",
-            group=group_low
+        group = self._create_group(
+            name="Medium", permission=2
         )
-        if created:
-          print(f"Create User : {user.username} pass: {user.password}")
 
-        user, created = Users.objects.get_or_create(
-            username="Admin",
-            password="1234",
-            group=group_a,
-            is_superuser=True
-        )
-        if created:
-          print(f"Create User : {user.username} pass: {user.password}")
+        self._create_user("Medium_Users", "1234", group)
