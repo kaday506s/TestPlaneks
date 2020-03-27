@@ -90,7 +90,6 @@ class UsersViewSet(GenericViewSet, RetrieveModelMixin, ListModelMixin):
 
 
         """
-        print('asdasdasdas')
         token = request.query_params.get("token")
         if not token:
             return ParseError(ErrorMsg.NotToken.value)

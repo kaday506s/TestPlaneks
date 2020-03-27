@@ -21,7 +21,7 @@ from apps.posts.serializers import (
     CategorySerializer,
     PostsCommentSerializer
 )
-from apps.posts.consts import ErrorMsg, EmailTextPosts
+from apps.posts.consts import ErrorMsg
 from apps.posts.filters import PostsFilter
 from apps.posts.task import main_schedule_task_comments
 
@@ -84,9 +84,7 @@ class PostsViewSet(GenericViewSet, ListModelMixin, RetrieveModelMixin):
             author_comments=request.user,
             posts=current_posts
         )
-        print(current_posts.title)
-        print(current_posts.author)
-        print(EmailTextPosts.MessageNewComment.value.format(data.get('text'),current_posts.title))
+
         main_schedule_task_comments.delay(
             data.get('text'),
             current_posts.title,
