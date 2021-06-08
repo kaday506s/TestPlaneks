@@ -24,5 +24,5 @@ restframework-simplejwt==4.4.0
 celery==4.3.0
 django-filter==2.2.0
 django-debug-toolbar==2.1
-Pillow==7.0.0
+Pillow==8.2.0
 redis==3.3.11
